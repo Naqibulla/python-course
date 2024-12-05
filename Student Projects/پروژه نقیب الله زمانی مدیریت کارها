@@ -1,0 +1,76 @@
+کد کامل سیستم مدیریت کارها با رابط کاربری متنی
+
+class Task:
+    def __init__(self, title):
+        self.title = title
+        self.is_completed = False
+
+    def __str__(self):
+        return f"{self.title} - {'انجام شده' if self.is_completed else 'در انتظار انجام'}"
+
+
+class ToDoList:
+    def __init__(self):
+        self.tasks = []
+
+    def add_task(self, task):
+        self.tasks.append(task)
+        print(f"وظیفه '{task.title}' با موفقیت اضافه شد.")
+
+    def remove_task(self, task_title):
+        task = next((t for t in self.tasks if t.title == task_title), None)
+        if task:
+            self.tasks.remove(task)
+            print(f"وظیفه '{task_title}' حذف شد.")
+        else:
+            print(f"وظیفه '{task_title}' یافت نشد.")
+
+    def complete_task(self, task_title):
+        task = next((t for t in self.tasks if t.title == task_title), None)
+        if task:
+            task.is_completed = True
+            print(f"وظیفه '{task_title}' به عنوان انجام‌شده علامت‌گذاری شد.")
+        else:
+            print(f"وظیفه '{task_title}' یافت نشد.")
+
+    def display_tasks(self):
+        if not self.tasks:
+            print("لیست وظایف خالی است.")
+        else:
+            print("لیست وظایف:")
+            for task in self.tasks:
+                print(task)
+
+
+def main():
+    todo_list = ToDoList()
+
+    while True:
+        print("\nسیستم مدیریت کارها")
+        print("1. افزودن وظیفه جدید")
+        print("2. حذف وظیفه")
+        print("3. علامت‌گذاری وظیفه به عنوان انجام شده")
+        print("4. نمایش لیست وظایف")
+        print("5. خروج")
+        choice = input("لطفاً یک گزینه را انتخاب کنید: ")
+
+        if choice == "1":
+            title = input("عنوان وظیفه جدید را وارد کنید: ")
+            todo_list.add_task(Task(title))
+        elif choice == "2":
+            title = input("عنوان وظیفه‌ای که می‌خواهید حذف کنید را وارد کنید: ")
+            todo_list.remove_task(title)
+        elif choice == "3":
+            title = input("عنوان وظیفه‌ای که می‌خواهید به عنوان انجام شده علامت بزنید را وارد کنید: ")
+            todo_list.complete_task(title)
+        elif choice == "4":
+            todo_list.display_tasks()
+        elif choice == "5":
+            print("خروج از برنامه. روز خوبی داشته باشید!")
+            break
+        else:
+            print("گزینه نامعتبر است. لطفاً دوباره تلاش کنید.")
+
+
+if __name__ == "__main__":
+    main()
